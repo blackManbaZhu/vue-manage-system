@@ -48,6 +48,10 @@
                                 title: '基础表格'
                             },
                             {
+                                index: 'map',
+                                title: '地图展示'
+                            },
+                            {
                                 index: 'vuetable',
                                 title: 'Vue表格组件'
                             }
@@ -97,26 +101,29 @@
         methods:{
             clkTab(item,title){
                 this.$emit('clickMenu',item,title,'item','title');
+            },
+            initMenu() {
+                let path  = this.$route.path.replace('/','');
+                let title = '';
+                let arr   = this.items.filter(function (d) {
+                    if( d.index != path && d.subs != undefined && d.subs ) {
+                        for(let i=0;i<d.subs.length;i++){
+                            if(d.subs[i].index == path){
+                                title = d.subs[i].title;
+                                return d.subs[i].title;;
+                            }
+                        }
+                    } else 
+                    if( d.index == path ){
+                        title = d.title;
+                        return d;
+                    }
+                });
+                this.$emit('initMenu',arr,title,'item','title');
             }
         },
         mounted(){
-            let path  = this.$route.path.replace('/','');
-            let title = '';
-            let arr   = this.items.filter(function (d) {
-                if( d.index != path && d.subs != undefined && d.subs ) {
-                    for(let i=0;i<d.subs.length;i++){
-                        if(d.subs[i].index == path){
-                            title = d.subs[i].title;
-                            return d.subs[i].title;;
-                        }
-                    }
-                } else 
-                if( d.index == path ){
-                    title = d.title;
-                    return d;
-                }
-            });
-            this.$emit('initMenu',arr,title,'item','title');
+           this.initMenu(); //初始化内容区头部导航
         }
     }
 </script>

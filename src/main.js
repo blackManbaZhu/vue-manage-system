@@ -7,6 +7,7 @@ import ElementUI from 'element-ui';
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
 import "babel-polyfill";
 import 'element-ui/lib/theme-chalk/index.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios;

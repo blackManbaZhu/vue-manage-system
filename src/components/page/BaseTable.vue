@@ -48,7 +48,7 @@
                 <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
                     <el-input v-model="form.address" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="活动区域" :label-width="formLabelWidth">
+                <el-form-item label="活动区域" :label-width="formLabelWidth" prop="date">
                      <el-date-picker
                         v-model="form.date"
                         type="date"
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+    import { requestTableList } from '../../api/api';
     export default {
         data() {
             return {
@@ -89,7 +90,7 @@
                 rules: {
                     name:{ required:true, message:'请输入名字', trigger:'blur' },
                     address:{ required:true, message:'请输入地址', trigger:'blur' },
-                    // date:{ required:true, message:'请选择日期', trigger:'bulr' }
+                    date:{ required:true, message:'请选择日期', trigger:'chnange' }
                 }
             }
         },
@@ -127,10 +128,16 @@
                 let self = this;
                 if(process.env.NODE_ENV === 'development'){
                     self.url = '/ms/table/list';
+                    requestTableList({page:self.cur_page}).then( (response) => {
+                        console.log(response);
+                        self.tableData = response.list;
+                    }).catch( (error) => {
+                        console.log(error);
+                    })
                 };
-                self.$axios.post(self.url, {page:self.cur_page}).then((res) => {
-                    self.tableData = res.data.list;
-                })
+                // self.$axios.post(self.url, {page:self.cur_page}).then((res) => {
+                //     self.tableData = res.data.list;
+                // })
             },
             search(){
                 this.is_search = true;
