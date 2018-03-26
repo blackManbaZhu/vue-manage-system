@@ -62,6 +62,9 @@ export default {
           if (valid) {
             let user = this.ruleForm2.account;
             localStorage.setItem('ms_username',JSON.stringify(user));
+            //存入权限信息
+            let extent = ['00100','00200','00201','00202','00203','00300','00301','00302','00303','00304','00400']
+            localStorage.setItem('extent',extent);
             this.logining = true;
             this.$router.push({ path:'/home' });
           } else {

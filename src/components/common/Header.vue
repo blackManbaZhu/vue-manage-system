@@ -42,7 +42,8 @@
 				this.$confirm('确认退出吗?', '提示', {
 					type: 'warning'
 				}).then(() => {
-					localStorage.removeItem('ms_username');
+                    localStorage.removeItem('ms_username');
+                    localStorage.removeItem('extent');
 					_this.$router.push('/login');
 				}).catch(() => {
 
